@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rationale Zahlen 1 – Mathematik Klasse 7, Wiederholung (Ordnen, Vergleichen, Betrag, Gegenzahl, Koordinatensystem) und Addieren und Subtrahieren mit Klammern</title>
+<style>
+  :root{
+    --paper:#fdfdfb; --grid:#e3ebf5; --ink:#1d2433; --blue:#1f4fa3; --blue-soft:#e8eefa;
+    --red:#c22f3a; --red-soft:#fbe9ea; --green:#2c7a4b; --green-soft:#e5f3ea; --muted:#5d6678; --line:#c9d3e2;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); font:17px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background-color:var(--paper);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:22px 22px;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-family:Georgia,"Times New Roman",serif;font-size:2rem;line-height:1.2;margin:0 0 6px;color:var(--blue)}
+  header p{margin:0 0 6px;color:var(--muted)}
+  .bar{position:sticky;top:0;z-index:5;background:rgba(253,253,251,.96);border-bottom:2px solid var(--blue);
+       margin:18px -18px 22px;padding:10px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .meter{flex:1;min-width:160px;height:12px;background:var(--blue-soft);border-radius:6px;overflow:hidden}
+  .meter span{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+  .score{font-weight:600;white-space:nowrap}
+  .task{background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:6px;
+        padding:16px 18px 14px;margin:0 0 18px}
+  .task.done{border-left-color:var(--green)}
+  .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .num{font-family:Georgia,serif;font-size:1.35rem;font-weight:700;color:var(--blue)}
+  .src{font-size:.82rem;color:var(--muted);text-align:right}
+  .q{margin:2px 0 10px}
+  .field{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+  input[type=text]{font:inherit;font-size:1.05rem;padding:7px 10px;width:150px;border:none;border-bottom:2px solid var(--blue);
+        background:var(--blue-soft);border-radius:4px 4px 0 0;color:var(--blue)}
+  input.wide{width:min(100%,320px)}
+  input[type=text]:focus{outline:3px solid #9fb8e6;outline-offset:1px}
+  input.ok{border-bottom-color:var(--green);background:var(--green-soft);color:var(--green)}
+  input.no{border-bottom-color:var(--red);background:var(--red-soft);color:var(--red)}
+  .unit{color:var(--muted)}
+  .mc{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+  .mc button{font:inherit;padding:7px 14px;border:2px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--ink)}
+  .mc button[aria-pressed=true]{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:600}
+  .mc button.ok{border-color:var(--green);background:var(--green-soft);color:var(--green)}
+  .mc button.no{border-color:var(--red);background:var(--red-soft);color:var(--red)}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{font:inherit;font-size:.95rem;padding:7px 14px;border-radius:6px;cursor:pointer;border:2px solid var(--blue);background:var(--blue);color:#fff}
+  .btn.ghost{background:#fff;color:var(--blue)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn:focus-visible,.mc button:focus-visible{outline:3px solid #9fb8e6;outline-offset:2px}
+  .fb{margin-top:8px;font-weight:600;min-height:1.2em}
+  .fb.ok{color:var(--green)} .fb.no{color:var(--red)}
+  .box{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.97rem}
+  .tip{background:#fff8e1;border:1px dashed #d9b44a}
+  .sol{background:var(--green-soft);border:1px solid #b9dcc6}
+  .sol h4{margin:0 0 6px;font-size:1rem;color:var(--green)}
+  .sol .alt{margin-top:8px;padding-top:8px;border-top:1px dashed #9ccab0}
+  .calc{font-family:Georgia,serif;font-size:1.02rem}
+  table.wt{border-collapse:collapse;margin:6px 0}
+  table.wt td,table.wt th{border:1px solid var(--line);padding:4px 12px;text-align:center}
+  svg{max-width:100%;height:auto}
+  .end{background:#fff;border:2px solid var(--blue);border-radius:8px;padding:18px;margin-top:26px}
+  .end h2{font-family:Georgia,serif;margin:0 0 8px;color:var(--blue)}
+  footer{margin-top:30px;font-size:.82rem;color:var(--muted)}
+  @media (max-width:520px){ body{font-size:16px} header h1{font-size:1.6rem} .head{flex-direction:column;gap:0} .src{text-align:left} }
+  @media (prefers-reduced-motion:reduce){ .meter span{transition:none} }
+  @media print{ .bar,.actions,.fb{display:none} body{background:none} .task{break-inside:avoid} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Rationale Zahlen 1</h1>
+    <p>Mathematik Klasse 7, Wiederholung (Ordnen, Vergleichen, Betrag, Gegenzahl, Koordinatensystem) und Addieren und Subtrahieren mit Klammern. 33 Aufgaben zum Üben mit Selbstkontrolle.</p>
+    <p>So gehst du vor: Löse jede Aufgabe zuerst selbst im Heft. Trage dann dein Ergebnis ein und klicke auf „Prüfen“. Danach kannst du dir den Lösungsvorschlag ansehen und mit deinem Weg vergleichen. Einheiten musst du nicht mit eintippen, Komma oder Punkt ist egal.</p>
+  </header>
+
+  <div class="bar" role="status" aria-live="polite">
+    <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+    <div class="score" id="score">0 Punkte</div>
+    <button class="btn ghost" id="reset" type="button">Neu starten</button>
+  </div>
+
+  <main id="tasks"></main>
+
+  <section class="end" id="end">
+    <h2>Deine Auswertung</h2>
+    <p id="endText">Bearbeite die Aufgaben und klicke dann hier auf „Auswerten“.</p>
+    <button class="btn" id="evalBtn" type="button">Auswerten</button>
+  </section>
+
+  <footer>Aufgaben für den Unterricht zusammengestellt, teilweise angelehnt an das Arbeitsheft S. 41 bis 53 und das Mathebuch S. 108/109. Die Seite speichert keine Eingaben und sendet keine Daten.</footer>
+</div>
+
+<script>
+/* Aufgabentypen:
+   "num"  Zahlenfeld, accept = Liste akzeptierter Zahlen (z. B. Rundungsvarianten, andere Einheiten)
+   "mc"   Auswahl, options = Liste, correct = Index der richtigen Option
+   "text" Kurzantwort, accept = Liste akzeptierter Wörter/Begriffe (Groß-/Kleinschreibung egal)
+   Optional pro Aufgabe: fig (SVG/HTML), points (Gesamtpunkte, nur bei komplett richtig), alt (Auch-richtig-Hinweis) */
+const T = [
+ {src:"Arbeitsheft S. 44, Aufgabe 4 (Auswahl)",
+  q:"<b>Teil 1: Wiederholung.</b> Vergleiche die Zahlen. Wähle &lt; oder &gt;.",
+  parts:[{type:"mc", label:"a) −13 ? −25", options:["&lt;","&gt;"], correct:1},
+         {type:"mc", label:"b) −4 ? −8", options:["&lt;","&gt;"], correct:1},
+         {type:"mc", label:"c) −3,8 ? +3,7", options:["&lt;","&gt;"], correct:0},
+         {type:"mc", label:"d) −5,02 ? −5,01", options:["&lt;","&gt;"], correct:0},
+         {type:"mc", label:"e) −8,03 ? −8,3", options:["&lt;","&gt;"], correct:1}],
+  tip:"Auf der Zahlengeraden liegt die kleinere Zahl weiter links. Bei negativen Zahlen gilt: Je größer der Betrag, desto kleiner die Zahl.",
+  sol:`<p class="calc">a) −13 <b>&gt;</b> −25<br>b) −4 <b>&gt;</b> −8<br>c) −3,8 <b>&lt;</b> +3,7 (jede negative Zahl ist kleiner als jede positive)<br>d) −5,02 <b>&lt;</b> −5,01 (−5,02 liegt weiter links)<br>e) −8,03 <b>&gt;</b> −8,3 (−8,30 liegt weiter links)</p>`},
+
+ {src:"Arbeitsheft S. 44, Aufgabe 6b",
+  q:"Ordne der Größe nach.<br>−11; −1; 4; −4; 2; −5; 0; −7",
+  parts:[{type:"num", label:"Kleinste Zahl:", accept:[-11]},
+         {type:"num", label:"Größte Zahl:", accept:[4]},
+         {type:"mc", label:"Welche Reihenfolge ist richtig?", options:[
+            "−1 &lt; −4 &lt; −5 &lt; −7 &lt; −11 &lt; 0 &lt; 2 &lt; 4",
+            "−11 &lt; −7 &lt; −5 &lt; −4 &lt; −1 &lt; 0 &lt; 2 &lt; 4",
+            "0 &lt; −1 &lt; 2 &lt; −4 &lt; 4 &lt; −5 &lt; −7 &lt; −11",
+            "−11 &lt; −7 &lt; −5 &lt; −4 &lt; 0 &lt; −1 &lt; 2 &lt; 4"], correct:1}],
+  tip:"Beginne mit der negativen Zahl, die am weitesten links auf der Zahlengeraden liegt.",
+  sol:`<p class="calc"><b>−11 &lt; −7 &lt; −5 &lt; −4 &lt; −1 &lt; 0 &lt; 2 &lt; 4</b></p>`},
+
+ {src:"Arbeitsheft S. 43, Aufgabe 1 (angepasst)",
+  q:"Gib die Zahl an der markierten Stelle an. Zwischen zwei ganzen Zahlen sind es vier Abschnitte.",
+  fig:`<svg viewBox="0 0 620 110" style="max-width:100%;height:auto" role="img" aria-label="Zahlengerade von −3 bis 3 mit den Pfeilen A, B und C"><line x1="20" y1="70" x2="605" y2="70" stroke="#222" stroke-width="2"/><polygon points="605,64 617,70 605,76" fill="#222"/><line x1="40.0" y1="62" x2="40.0" y2="78" stroke="#222" stroke-width="2"/><text x="40.0" y="98" font-size="16" text-anchor="middle">−3</text><line x1="62.5" y1="65" x2="62.5" y2="75" stroke="#222" stroke-width="1"/><line x1="85.0" y1="65" x2="85.0" y2="75" stroke="#222" stroke-width="1"/><line x1="107.5" y1="65" x2="107.5" y2="75" stroke="#222" stroke-width="1"/><line x1="130.0" y1="62" x2="130.0" y2="78" stroke="#222" stroke-width="2"/><text x="130.0" y="98" font-size="16" text-anchor="middle">−2</text><line x1="152.5" y1="65" x2="152.5" y2="75" stroke="#222" stroke-width="1"/><line x1="175.0" y1="65" x2="175.0" y2="75" stroke="#222" stroke-width="1"/><line x1="197.5" y1="65" x2="197.5" y2="75" stroke="#222" stroke-width="1"/><line x1="220.0" y1="62" x2="220.0" y2="78" stroke="#222" stroke-width="2"/><text x="220.0" y="98" font-size="16" text-anchor="middle">−1</text><line x1="242.5" y1="65" x2="242.5" y2="75" stroke="#222" stroke-width="1"/><line x1="265.0" y1="65" x2="265.0" y2="75" stroke="#222" stroke-width="1"/><line x1="287.5" y1="65" x2="287.5" y2="75" stroke="#222" stroke-width="1"/><line x1="310.0" y1="62" x2="310.0" y2="78" stroke="#222" stroke-width="2"/><text x="310.0" y="98" font-size="16" text-anchor="middle">0</text><line x1="332.5" y1="65" x2="332.5" y2="75" stroke="#222" stroke-width="1"/><line x1="355.0" y1="65" x2="355.0" y2="75" stroke="#222" stroke-width="1"/><line x1="377.5" y1="65" x2="377.5" y2="75" stroke="#222" stroke-width="1"/><line x1="400.0" y1="62" x2="400.0" y2="78" stroke="#222" stroke-width="2"/><text x="400.0" y="98" font-size="16" text-anchor="middle">1</text><line x1="422.5" y1="65" x2="422.5" y2="75" stroke="#222" stroke-width="1"/><line x1="445.0" y1="65" x2="445.0" y2="75" stroke="#222" stroke-width="1"/><line x1="467.5" y1="65" x2="467.5" y2="75" stroke="#222" stroke-width="1"/><line x1="490.0" y1="62" x2="490.0" y2="78" stroke="#222" stroke-width="2"/><text x="490.0" y="98" font-size="16" text-anchor="middle">2</text><line x1="512.5" y1="65" x2="512.5" y2="75" stroke="#222" stroke-width="1"/><line x1="535.0" y1="65" x2="535.0" y2="75" stroke="#222" stroke-width="1"/><line x1="557.5" y1="65" x2="557.5" y2="75" stroke="#222" stroke-width="1"/><line x1="580.0" y1="62" x2="580.0" y2="78" stroke="#222" stroke-width="2"/><text x="580.0" y="98" font-size="16" text-anchor="middle">3</text><line x1="85.0" y1="22" x2="85.0" y2="58" stroke="#c0392b" stroke-width="2.5"/><polygon points="79.0,52 85.0,62 91.0,52" fill="#c0392b"/><text x="85.0" y="17" font-size="17" font-weight="bold" text-anchor="middle" fill="#c0392b">A</text><line x1="242.5" y1="22" x2="242.5" y2="58" stroke="#c0392b" stroke-width="2.5"/><polygon points="236.5,52 242.5,62 248.5,52" fill="#c0392b"/><text x="242.5" y="17" font-size="17" font-weight="bold" text-anchor="middle" fill="#c0392b">B</text><line x1="445.0" y1="22" x2="445.0" y2="58" stroke="#c0392b" stroke-width="2.5"/><polygon points="439.0,52 445.0,62 451.0,52" fill="#c0392b"/><text x="445.0" y="17" font-size="17" font-weight="bold" text-anchor="middle" fill="#c0392b">C</text></svg>`,
+  parts:[{type:"num", label:"A =", accept:[-2.5]},
+         {type:"num", label:"B =", accept:[-0.75]},
+         {type:"num", label:"C =", accept:[1.5]}],
+  tip:"Ein kleiner Abschnitt ist 0,25 lang. Zähle von der nächsten ganzen Zahl aus.",
+  sol:`<p class="calc">A = <b>−2,5</b><br>B = <b>−0,75</b> (drei Viertel links von 0)<br>C = <b>1,5</b></p>`,
+  alt:"Auch richtig: −5/2, −3/4 und 3/2"},
+
+ {src:"Arbeitsheft S. 44, Aufgabe 7 (Auswahl)",
+  q:"Finde eine Zahl, die dazwischen liegt.",
+  parts:[{type:"num", label:"a) −1,7 &lt; ■ &lt; −1,6  ■ =", accept:[-1.65], tol:0.0499},
+         {type:"num", label:"b) −3,1 &lt; ■ &lt; −3  ■ =", accept:[-3.05], tol:0.0499}],
+  tip:"Hänge eine Nachkommastelle an. Zwischen −1,70 und −1,60 liegen zum Beispiel −1,69 oder −1,61.",
+  sol:`<p class="calc">a) zum Beispiel <b>−1,65</b><br>b) zum Beispiel <b>−3,05</b></p>`,
+  alt:"Jede Zahl zwischen den Grenzen ist richtig, z. B. −1,62 oder −3,08."},
+
+ {src:"Übungsaufgabe",
+  q:"Gib den Betrag an. Der Betrag ist der Abstand einer Zahl von 0.",
+  parts:[{type:"num", label:"a) |−7| =", accept:[7]},
+         {type:"num", label:"b) |+2,5| =", accept:[2.5]},
+         {type:"num", label:"c) |0| =", accept:[0]},
+         {type:"num", label:"d) |−18,4| =", accept:[18.4]}],
+  tip:"Ein Abstand ist nie negativ.",
+  sol:`<p class="calc">a) <b>7</b><br>b) <b>2,5</b><br>c) <b>0</b><br>d) <b>18,4</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Gib die Gegenzahl an. Die Gegenzahl liegt auf der anderen Seite der 0, gleich weit entfernt.",
+  parts:[{type:"num", label:"a) Gegenzahl von −12:", accept:[12]},
+         {type:"num", label:"b) Gegenzahl von 4,5:", accept:[-4.5]},
+         {type:"num", label:"c) Gegenzahl von −0,8:", accept:[0.8]}],
+  tip:"Du änderst nur das Vorzeichen.",
+  sol:`<p class="calc">a) <b>12</b><br>b) <b>−4,5</b><br>c) <b>0,8</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Welche Zahl hat den größeren Betrag?",
+  parts:[{type:"mc", label:"−9 oder 6?", options:["−9","6"], correct:0},
+         {type:"mc", label:"−2,5 oder 3?", options:["−2,5","3"], correct:1}],
+  tip:"Vergleiche die Abstände zur 0, das Vorzeichen spielt keine Rolle.",
+  sol:`<p class="calc">|−9| = 9 ist größer als |6| = 6, also <b>−9</b><br>|3| = 3 ist größer als |−2,5| = 2,5, also <b>3</b></p>`},
+
+ {src:"Arbeitsheft S. 44, Aufgabe 8/9 (angepasst)",
+  q:"Zahlbereiche: natürliche Zahlen (ℕ), ganze Zahlen (ℤ), rationale Zahlen (ℚ).",
+  parts:[{type:"mc", label:"Welche Zahl ist eine ganze, aber keine natürliche Zahl?", options:["5","−7","0,6","3/4"], correct:1},
+         {type:"mc", label:"Welche Zahl ist rational, aber nicht ganz?", options:["23","−11","−4,1","3"], correct:2}],
+  tip:"Natürliche Zahlen sind 0, 1, 2, 3, … Ganze Zahlen sind zusätzlich die negativen ohne Komma.",
+  sol:`<p class="calc"><b>−7</b> ist ganz, aber nicht natürlich.<br><b>−4,1</b> ist rational, aber keine ganze Zahl.</p>`},
+
+ {src:"Arbeitsheft S. 52, Aufgabe 1a (angepasst)",
+  q:"Lies die Koordinaten der Punkte ab. Zuerst x (nach rechts oder links), dann y (nach oben oder unten).",
+  fig:`<svg viewBox="0 0 360 360" style="max-width:340px;width:100%;height:auto" role="img" aria-label="Koordinatensystem von −5 bis 5 mit den Punkten P, Q und R"><line x1="40" y1="26.0" x2="40" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="40" x2="334.0" y2="40" stroke="#dde3ee"/><line x1="68" y1="26.0" x2="68" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="68" x2="334.0" y2="68" stroke="#dde3ee"/><line x1="96" y1="26.0" x2="96" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="96" x2="334.0" y2="96" stroke="#dde3ee"/><line x1="124" y1="26.0" x2="124" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="124" x2="334.0" y2="124" stroke="#dde3ee"/><line x1="152" y1="26.0" x2="152" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="152" x2="334.0" y2="152" stroke="#dde3ee"/><line x1="180" y1="26.0" x2="180" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="180" x2="334.0" y2="180" stroke="#dde3ee"/><line x1="208" y1="26.0" x2="208" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="208" x2="334.0" y2="208" stroke="#dde3ee"/><line x1="236" y1="26.0" x2="236" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="236" x2="334.0" y2="236" stroke="#dde3ee"/><line x1="264" y1="26.0" x2="264" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="264" x2="334.0" y2="264" stroke="#dde3ee"/><line x1="292" y1="26.0" x2="292" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="292" x2="334.0" y2="292" stroke="#dde3ee"/><line x1="320" y1="26.0" x2="320" y2="334.0" stroke="#dde3ee"/><line x1="26.0" y1="320" x2="334.0" y2="320" stroke="#dde3ee"/><line x1="17.599999999999994" y1="180" x2="342.4" y2="180" stroke="#222" stroke-width="1.8"/><line x1="180" y1="342.4" x2="180" y2="17.599999999999994" stroke="#222" stroke-width="1.8"/><text x="342.4" y="174" font-size="14" text-anchor="end">x</text><text x="188" y="26.0" font-size="14">y</text><text x="40" y="196" font-size="11" text-anchor="middle">−5</text><text x="174" y="324" font-size="11" text-anchor="end">−5</text><text x="68" y="196" font-size="11" text-anchor="middle">−4</text><text x="174" y="296" font-size="11" text-anchor="end">−4</text><text x="96" y="196" font-size="11" text-anchor="middle">−3</text><text x="174" y="268" font-size="11" text-anchor="end">−3</text><text x="124" y="196" font-size="11" text-anchor="middle">−2</text><text x="174" y="240" font-size="11" text-anchor="end">−2</text><text x="152" y="196" font-size="11" text-anchor="middle">−1</text><text x="174" y="212" font-size="11" text-anchor="end">−1</text><text x="208" y="196" font-size="11" text-anchor="middle">1</text><text x="174" y="156" font-size="11" text-anchor="end">1</text><text x="236" y="196" font-size="11" text-anchor="middle">2</text><text x="174" y="128" font-size="11" text-anchor="end">2</text><text x="264" y="196" font-size="11" text-anchor="middle">3</text><text x="174" y="100" font-size="11" text-anchor="end">3</text><text x="292" y="196" font-size="11" text-anchor="middle">4</text><text x="174" y="72" font-size="11" text-anchor="end">4</text><text x="320" y="196" font-size="11" text-anchor="middle">5</text><text x="174" y="44" font-size="11" text-anchor="end">5</text><text x="174" y="196" font-size="11" text-anchor="end">0</text><g stroke="#c0392b" stroke-width="2.5"><line x1="90" y1="118" x2="102" y2="130"/><line x1="90" y1="130" x2="102" y2="118"/></g><text x="104" y="116" font-size="16" font-weight="bold" fill="#c0392b">P</text><g stroke="#c0392b" stroke-width="2.5"><line x1="286" y1="202" x2="298" y2="214"/><line x1="286" y1="214" x2="298" y2="202"/></g><text x="300" y="200" font-size="16" font-weight="bold" fill="#c0392b">Q</text><g stroke="#c0392b" stroke-width="2.5"><line x1="118" y1="286" x2="130" y2="298"/><line x1="118" y1="298" x2="130" y2="286"/></g><text x="132" y="284" font-size="16" font-weight="bold" fill="#c0392b">R</text></svg>`,
+  parts:[{type:"num", label:"P: x =", accept:[-3]},{type:"num", label:"P: y =", accept:[2]},
+         {type:"num", label:"Q: x =", accept:[4]},{type:"num", label:"Q: y =", accept:[-1]},
+         {type:"num", label:"R: x =", accept:[-2]},{type:"num", label:"R: y =", accept:[-4]}],
+  tip:"Gehe vom Ursprung aus erst waagerecht bis unter oder über den Punkt, dann senkrecht.",
+  sol:`<p class="calc"><b>P(−3 | 2)</b><br><b>Q(4 | −1)</b><br><b>R(−2 | −4)</b></p>`},
+
+ {src:"Arbeitsheft S. 53, Aufgabe 3a",
+  q:"In welchem Quadranten liegt der Punkt? (I oben rechts, II oben links, III unten links, IV unten rechts)",
+  parts:[{type:"mc", label:"A(−4 | 3)", options:["I","II","III","IV"], correct:1},
+         {type:"mc", label:"C(−9 | −2)", options:["I","II","III","IV"], correct:2},
+         {type:"mc", label:"D(5 | −9)", options:["I","II","III","IV"], correct:3}],
+  tip:"Schau auf die Vorzeichen: x negativ heißt links, y negativ heißt unten.",
+  sol:`<p class="calc">A: x negativ, y positiv, also <b>II</b><br>C: beide negativ, also <b>III</b><br>D: x positiv, y negativ, also <b>IV</b></p>`},
+
+ {src:"Arbeitsheft S. 53, Aufgabe 6a",
+  q:"Der Punkt A(1 | 2) wird sechs Einheiten nach links und eine Einheit nach oben verschoben. Gib die Koordinaten des Bildpunktes A' an.",
+  parts:[{type:"num", label:"A': x =", accept:[-5]},{type:"num", label:"A': y =", accept:[3]}],
+  tip:"Nach links verändert die x-Koordinate (minus), nach oben die y-Koordinate (plus).",
+  sol:`<p class="calc">x: 1 − 6 = −5<br>y: 2 + 1 = 3<br><b>A'(−5 | 3)</b></p>`},
+
+ {src:"Arbeitsheft S. 52, Aufgabe 2a (angepasst)",
+  q:"Der Punkt B(4 | −3) wird an der y-Achse gespiegelt. Gib die Koordinaten von B' an.",
+  parts:[{type:"num", label:"B': x =", accept:[-4]},{type:"num", label:"B': y =", accept:[-3]}],
+  tip:"Bei der Spiegelung an der y-Achse bleibt die Höhe gleich. Der Punkt landet gleich weit auf der anderen Seite.",
+  sol:`<p class="calc">x wird zur Gegenzahl, y bleibt.<br><b>B'(−4 | −3)</b></p>`},
+
+ {src:"Übungsaufgabe (Aufwärmen)",
+  q:"<b>Teil 2: Addieren und Subtrahieren.</b> Aufwärmen ohne Klammern. Berechne.",
+  parts:[{type:"num", label:"a) −7 + 3 =", accept:[-4]},
+         {type:"num", label:"b) −5 − 4 =", accept:[-9]},
+         {type:"num", label:"c) 6 − 11 =", accept:[-5]},
+         {type:"num", label:"d) −12 + 20 =", accept:[8]}],
+  tip:"Stell dir die Zahlengerade vor. Starte bei der ersten Zahl. Bei + gehst du nach rechts, bei − nach links.",
+  sol:`<p class="calc">a) −7 + 3 = <b>−4</b> (von −7 drei Schritte nach rechts)<br>b) −5 − 4 = <b>−9</b> (von −5 vier Schritte nach links)<br>c) 6 − 11 = <b>−5</b><br>d) −12 + 20 = <b>8</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Am Morgen zeigt das Thermometer −4 °C. Bis zum Mittag steigt die Temperatur um 9 Grad.<br>Wie warm ist es am Mittag?",
+  parts:[{type:"num", label:"Temperatur:", unit:"°C", accept:[5]}],
+  tip:"„Steigen“ heißt: Du rechnest plus. Beginne bei −4.",
+  sol:`<p class="calc">−4 + 9 = <b>5</b><br>Am Mittag sind es 5 °C.</p>`,
+  alt:"Auch richtig: +5"},
+
+ {src:"Übungsaufgabe",
+  q:"Leas Konto steht bei −35 €. Sie zahlt 50 € ein. Danach bezahlt sie 28 € für ein Geschenk.",
+  parts:[{type:"num", label:"Kontostand nach der Einzahlung:", unit:"€", accept:[15]},
+         {type:"num", label:"Kontostand nach dem Einkauf:", unit:"€", accept:[-13]}],
+  tip:"Einzahlen bedeutet plus, Bezahlen bedeutet minus. Rechne Schritt für Schritt.",
+  sol:`<p class="calc">−35 + 50 = <b>15</b><br>15 − 28 = <b>−13</b><br>Lea hat am Ende 13 € Schulden.</p>`},
+
+ {src:"Übungsaufgabe (Regel)",
+  q:"<b>Teil 3: Jetzt mit Klammern!</b> Bei Aufgaben wie (−7) − (−3) steht vor der Klammer ein <i>Rechenzeichen</i> und in der Klammer ein <i>Vorzeichen</i>. Du kannst beide zu einem Zeichen zusammenfassen.",
+  parts:[{type:"mc", label:"Rechenzeichen und Vorzeichen sind <b>gleich</b> (+ + oder − −). Dann schreibe ich …", options:["+","−"], correct:0},
+         {type:"mc", label:"Rechenzeichen und Vorzeichen sind <b>verschieden</b> (+ − oder − +). Dann schreibe ich …", options:["+","−"], correct:1}],
+  tip:"Denk an Schulden. Wenn dir jemand Schulden wegnimmt (− (−8)), ist das gut für dich.",
+  sol:`<p class="calc">Gleiche Zeichen: + (+ …) wird zu <b>+</b> und − (− …) wird zu <b>+</b><br>Verschiedene Zeichen: + (− …) wird zu <b>−</b> und − (+ …) wird zu <b>−</b></p><p>Merksatz: gleich wird Plus, verschieden wird Minus.</p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Schreibe ohne Klammern und berechne.<br><b>(−7) − (−3)</b>",
+  parts:[{type:"mc", label:"Ohne Klammern heißt das:", options:["−7 − 3","−7 + 3","7 + 3","7 − 3"], correct:1},
+         {type:"num", label:"Ergebnis:", accept:[-4]}],
+  tip:"Die erste Zahl schreibst du einfach ohne Klammer ab. Zwischen den Klammern steht − − , das sind gleiche Zeichen.",
+  sol:`<p class="calc">(−7) − (−3)<br>= −7 + 3<br>= <b>−4</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Schreibe ohne Klammern und berechne.<br><b>(+5) + (−8)</b>",
+  parts:[{type:"mc", label:"Ohne Klammern heißt das:", options:["5 + 8","5 − 8","−5 − 8","−5 + 8"], correct:1},
+         {type:"num", label:"Ergebnis:", accept:[-3]}],
+  tip:"Plus und Minus sind verschieden. Die +5 darfst du einfach als 5 schreiben.",
+  sol:`<p class="calc">(+5) + (−8)<br>= 5 − 8<br>= <b>−3</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Schreibe ohne Klammern und berechne.<br><b>(−4) − (+6)</b>",
+  parts:[{type:"mc", label:"Ohne Klammern heißt das:", options:["−4 + 6","4 − 6","−4 − 6","4 + 6"], correct:2},
+         {type:"num", label:"Ergebnis:", accept:[-10]}],
+  tip:"Minus und Plus sind verschieden.",
+  sol:`<p class="calc">(−4) − (+6)<br>= −4 − 6<br>= <b>−10</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Schreibe ohne Klammern und berechne.<br><b>(−9) + (+5)</b>",
+  parts:[{type:"mc", label:"Ohne Klammern heißt das:", options:["−9 − 5","9 + 5","−9 + 5","9 − 5"], correct:2},
+         {type:"num", label:"Ergebnis:", accept:[-4]}],
+  tip:"Plus und Plus sind gleich.",
+  sol:`<p class="calc">(−9) + (+5)<br>= −9 + 5<br>= <b>−4</b></p>`},
+
+ {src:"Buch S. 108, Aufgabe 2 (Auswahl)",
+  q:"Schreibe die Aufgabe ohne Klammern und berechne.",
+  parts:[{type:"num", label:"a) (−4) + (+7) =", accept:[3]},
+         {type:"num", label:"b) (+5) − (−7) =", accept:[12]},
+         {type:"num", label:"c) (−2) − (−4) =", accept:[2]},
+         {type:"num", label:"d) (−1) − (−3) =", accept:[2]}],
+  tip:"Erst zusammenfassen: gleich wird Plus, verschieden wird Minus. Dann rechnen.",
+  sol:`<p class="calc">a) −4 + 7 = <b>3</b><br>b) 5 + 7 = <b>12</b><br>c) −2 + 4 = <b>2</b><br>d) −1 + 3 = <b>2</b></p>`},
+
+ {src:"Buch S. 108, Aufgabe 2 (Auswahl)",
+  q:"Schreibe die Aufgabe ohne Klammern und berechne.",
+  parts:[{type:"num", label:"a) (−9) + (−3) =", accept:[-12]},
+         {type:"num", label:"b) (+7) + (−3) =", accept:[4]},
+         {type:"num", label:"c) (−18) − (+5) =", accept:[-23]},
+         {type:"num", label:"d) (+15) − (−6) =", accept:[21]}],
+  tip:"Schreibe dir die vereinfachte Aufgabe auf, zum Beispiel (−9) + (−3) = −9 − 3.",
+  sol:`<p class="calc">a) −9 − 3 = <b>−12</b><br>b) 7 − 3 = <b>4</b><br>c) −18 − 5 = <b>−23</b><br>d) 15 + 6 = <b>21</b></p>`},
+
+ {src:"Buch S. 108, Aufgabe 2e/f (Auswahl)",
+  q:"Jetzt mit größeren Zahlen. Schreibe ohne Klammern und berechne.",
+  parts:[{type:"num", label:"a) (−13) + (−11) =", accept:[-24]},
+         {type:"num", label:"b) (+26) − (−57) =", accept:[83]},
+         {type:"num", label:"c) (−42) + (+11) =", accept:[-31]},
+         {type:"num", label:"d) (−61) − (−7) =", accept:[-54]}],
+  tip:"Nach dem Vereinfachen: Haben beide Zahlen das gleiche Zeichen, addierst du die Beträge. Sonst ziehst du den kleineren Betrag vom größeren ab und nimmst das Zeichen der Zahl mit dem größeren Betrag.",
+  sol:`<p class="calc">a) −13 − 11 = <b>−24</b><br>b) 26 + 57 = <b>83</b><br>c) −42 + 11 = <b>−31</b><br>d) −61 + 7 = <b>−54</b></p>`},
+
+ {src:"Übungsaufgabe (Fehlersuche)",
+  q:"Tom rechnet so:<br>(−8) − (−13) = −8 − 13 = −21<br>Was hat Tom falsch gemacht?",
+  parts:[{type:"mc", label:"", options:["Er hat die −8 falsch abgeschrieben.","Minus und Minus ergibt Plus, es muss −8 + 13 heißen.","Er hat sich nur beim Rechnen von −8 − 13 vertan.","Tom hat alles richtig gemacht."], correct:1},
+         {type:"num", label:"Richtiges Ergebnis:", accept:[5]}],
+  tip:"Schau dir die beiden Zeichen zwischen −8 und 13 genau an.",
+  sol:`<p class="calc">(−8) − (−13)<br>= −8 + 13<br>= <b>5</b></p><p>Tom hat aus − (− …) ein Minus gemacht. Gleiche Zeichen ergeben aber Plus.</p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Fülle die Lücke mit dem passenden Zeichen.<br>(−6) − (−10) = −6 <b>?</b> 10",
+  parts:[{type:"mc", label:"Das Zeichen ist …", options:["+","−"], correct:0},
+         {type:"num", label:"Ergebnis:", accept:[4]}],
+  tip:"Zwei Minuszeichen hintereinander sind gleiche Zeichen.",
+  sol:`<p class="calc">(−6) − (−10)<br>= −6 + 10<br>= <b>4</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"In Berlin sind es mittags +6 °C, in Moskau −5 °C.<br>Den Temperaturunterschied berechnest du mit 6 − (−5).",
+  parts:[{type:"num", label:"Unterschied:", unit:"°C", accept:[11]}],
+  tip:"Schreibe 6 − (−5) zuerst ohne Klammer.",
+  sol:`<p class="calc">6 − (−5)<br>= 6 + 5<br>= <b>11</b><br>Der Unterschied beträgt 11 Grad.</p>`,
+  alt:"Auch richtig: 11 Grad"},
+
+ {src:"Arbeitsheft S. 41, Aufgabe 3",
+  q:"In den Niederlanden liegen viele Orte unter dem Meeresspiegel.<br>Den Haag liegt 8 m <i>über</i>, Middelburg 0,5 m <i>unter</i> und Rotterdam 6 m <i>unter</i> dem Meeresspiegel.<br>Berechne den Höhenunterschied.",
+  parts:[{type:"num", label:"a) Den Haag und Middelburg: 8 − (−0,5) =", unit:"m", accept:[8.5]},
+         {type:"num", label:"b) Den Haag und Rotterdam: 8 − (−6) =", unit:"m", accept:[14]}],
+  tip:"Unter dem Meeresspiegel heißt negativ. Vereinfache dann die Klammer.",
+  sol:`<p class="calc">a) 8 − (−0,5) = 8 + 0,5 = <b>8,5 m</b><br>b) 8 − (−6) = 8 + 6 = <b>14 m</b></p>`,
+  alt:"Auch richtig: 8.5 mit Punkt statt Komma"},
+
+ {src:"Übungsaufgabe",
+  q:"Herr Kaya hat 40 € Schulden, sein Kontostand ist also −40 €. Sein Bruder erlässt ihm Schulden von 15 €.<br>Rechnung: (−40) − (−15)",
+  parts:[{type:"num", label:"Neuer Kontostand:", unit:"€", accept:[-25]}],
+  tip:"Wenn dir jemand Schulden erlässt, ist das gut für dich. Minus Minus wird Plus.",
+  sol:`<p class="calc">(−40) − (−15)<br>= −40 + 15<br>= <b>−25</b><br>Er hat jetzt nur noch 25 € Schulden.</p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Jetzt mit drei Zahlen. Fasse alle Zeichen zusammen und rechne dann von links nach rechts.",
+  parts:[{type:"num", label:"a) (−5) + (+8) − (−4) =", accept:[7]},
+         {type:"num", label:"b) (+12) − (+20) + (−3) =", accept:[-11]},
+         {type:"num", label:"c) (−6) − (−6) + (−10) =", accept:[-10]}],
+  tip:"Beispiel: (−5) + (+8) − (−4) = −5 + 8 + 4. Erst das, dann rechnen.",
+  sol:`<p class="calc">a) −5 + 8 + 4 = 3 + 4 = <b>7</b><br>b) 12 − 20 − 3 = −8 − 3 = <b>−11</b><br>c) −6 + 6 − 10 = 0 − 10 = <b>−10</b></p>`},
+
+ {src:"Übungsaufgabe",
+  q:"Auch mit Kommazahlen klappt das. Schreibe ohne Klammern und berechne.",
+  parts:[{type:"num", label:"a) (−2,5) + (+4) =", accept:[1.5]},
+         {type:"num", label:"b) (−1,5) − (−3,5) =", accept:[2]},
+         {type:"num", label:"c) (+0,5) − (+2) =", accept:[-1.5]}],
+  tip:"Die Regel ist dieselbe wie bei ganzen Zahlen. Komma oder Punkt darfst du tippen.",
+  sol:`<p class="calc">a) −2,5 + 4 = <b>1,5</b><br>b) −1,5 + 3,5 = <b>2</b><br>c) 0,5 − 2 = <b>−1,5</b></p>`},
+
+ {src:"Buch S. 109, Aufgabe 10 (angepasst)",
+  q:"Bestimme die fehlende Zahl.",
+  parts:[{type:"num", label:"a) (−3) − ■ = 4  ■ =", accept:[-7]},
+         {type:"num", label:"b) ■ + (−5) = −2  ■ =", accept:[3]}],
+  tip:"Probiere eine Zahl aus und mache die Probe. Bei a) muss das Ergebnis größer werden als −3. Das geht nur, wenn du eine negative Zahl abziehst.",
+  sol:`<p class="calc">a) (−3) − (−7) = −3 + 7 = 4, also ■ = <b>−7</b><br>b) 3 + (−5) = 3 − 5 = −2, also ■ = <b>3</b></p>`},
+
+ {src:"Übungsaufgabe (Profi)",
+  q:"<b>Profi-Aufgabe.</b> Berechne.<br>(−7) − (+3) − (−12) + (−2)",
+  parts:[{type:"num", label:"Ergebnis:", accept:[0]}],
+  tip:"Schreibe zuerst alles ohne Klammern auf. Dann kannst du die positiven und die negativen Zahlen jeweils zusammenfassen.",
+  sol:`<p class="calc">(−7) − (+3) − (−12) + (−2)<br>= −7 − 3 + 12 − 2<br>= 12 − 7 − 3 − 2<br>= 12 − 12<br>= <b>0</b></p>`},
+
+ {src:"Übungsaufgabe (Profi)",
+  q:"<b>Profi-Aufgabe mit Brüchen.</b> Schreibe ohne Klammern und berechne.",
+  parts:[{type:"num", label:"a) (−1/2) + (+3/4) =", accept:[0.25]},
+         {type:"num", label:"b) (−1/4) − (+1/2) =", accept:[-0.75]}],
+  tip:"Erst die Zeichen zusammenfassen, dann auf denselben Nenner bringen: 1/2 = 2/4. Du kannst als Bruch (1/4) oder als Kommazahl tippen.",
+  sol:`<p class="calc">a) −2/4 + 3/4 = <b>1/4</b><br>b) −1/4 − 2/4 = <b>−3/4</b></p>`,
+  alt:"Auch richtig: 0,25 und −0,75"}
+];
+
+const LOB = ["Hervorragend, das sitzt!", "Gut gemacht, nur noch wenige Lücken.", "Ein solider Anfang. Wiederhole die Aufgaben, die noch nicht geklappt haben.", "Hier lohnt sich noch Übung. Nutze die Tipps und Lösungsvorschläge."];
+
+const TOTAL = T.reduce((s,t)=>s+(t.points||t.parts.length),0);
+const state = T.map(t=>({checked:false, ok:t.parts.map(()=>false), mc:t.parts.map(()=>null)}));
+
+function parseNum(raw){
+  if(!raw) return NaN;
+  let s = raw.toLowerCase().replace(/\s+/g,"").replace(/[−–]/g,"-").replace(/[()]/g,"").replace(/^\+/,"")
+    .replace(/^[a-zα-ω]+[0-9]*=/,"")
+    .replace(/[^\d.,\/-].*$/,"")
+    .replace(",",".");
+  if(/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(s)){ const [a,b]=s.split("/").map(Number); return a/b; }
+  return /^-?\d*\.?\d+$/.test(s) ? Number(s) : NaN;
+}
+function normText(raw){
+  return (raw||"").toLowerCase().trim().replace(/\s+/g," ").replace(/[.!?;:,"„“']/g,"");
+}
+
+function render(){
+  const box = document.getElementById("tasks");
+  box.innerHTML = "";
+  T.forEach((t,i)=>{
+    const el = document.createElement("article");
+    el.className = "task"; el.id = "t"+i;
+    let html = `<div class="head"><span class="num">Aufgabe ${i+1}</span><span class="src">${t.src||""}</span></div>
+      <div class="q">${t.q}</div>${t.fig?`<div>${t.fig}</div>`:""}`;
+    t.parts.forEach((p,j)=>{
+      if(p.type==="num" || p.type==="text"){
+        html += `<div class="field"><label for="in${i}_${j}">${p.label||"Antwort:"}</label>
+          <input type="text" ${p.type==="num"?'inputmode="decimal"':'class="wide"'} autocomplete="off" autocapitalize="off" spellcheck="false" id="in${i}_${j}">
+          ${p.unit?`<span class="unit">${p.unit}</span>`:""}</div>`;
+      } else {
+        html += (p.label?`<div class="mclabel" style="margin:.7em 0 .3em;font-weight:600">${p.label}</div>`:"");
+        html += `<div class="mc" role="group" aria-label="Antwortmöglichkeiten">${p.options.map((o,k)=>
+          `<button type="button" aria-pressed="false" data-i="${i}" data-j="${j}" data-k="${k}">${o}</button>`).join("")}</div>`;
+      }
+    });
+    html += `<div class="actions">
+        <button class="btn" type="button" data-act="check" data-i="${i}">Prüfen</button>
+        ${t.tip?`<button class="btn ghost" type="button" data-act="tip" data-i="${i}">Tipp</button>`:""}
+        <button class="btn ghost" type="button" data-act="sol" data-i="${i}" disabled title="Erst nach dem Prüfen verfügbar">Lösungsvorschlag</button>
+      </div>
+      <div class="fb" id="fb${i}" aria-live="polite"></div>
+      ${t.tip?`<div class="box tip" id="tip${i}" hidden>💡 ${t.tip}</div>`:""}
+      <div class="box sol" id="sol${i}" hidden><h4>Lösungsvorschlag</h4>${t.sol}${t.alt?`<div class="alt">${t.alt}</div>`:""}</div>`;
+    el.innerHTML = html;
+    box.appendChild(el);
+  });
+}
+
+function check(i){
+  const t=T[i], st=state[i];
+  let allOk=true, anyEmpty=false;
+  t.parts.forEach((p,j)=>{
+    let ok=false;
+    if(p.type==="num" || p.type==="text"){
+      const inp=document.getElementById(`in${i}_${j}`);
+      if(inp.value.trim()==="") anyEmpty=true;
+      if(p.type==="num"){
+        const v=parseNum(inp.value), tol=p.tol||1e-6;
+        ok = !isNaN(v) && p.accept.some(a=>Math.abs(a-v)<=tol);
+      } else {
+        const v=normText(inp.value);
+        ok = v!=="" && p.accept.some(a=>normText(a)===v);
+      }
+      inp.classList.remove("ok","no"); if(inp.value.trim()!=="") inp.classList.add(ok?"ok":"no");
+    } else {
+      const sel=st.mc[j];
+      if(sel===null) anyEmpty=true;
+      ok = sel===p.correct;
+      document.querySelectorAll(`#t${i} .mc button[data-j="${j}"]`).forEach(b=>{
+        b.classList.remove("ok","no");
+        if(+b.dataset.k===sel) b.classList.add(ok?"ok":"no");
+      });
+    }
+    st.ok[j]=ok; if(!ok) allOk=false;
+  });
+  const fb=document.getElementById("fb"+i);
+  if(anyEmpty && !allOk){ fb.className="fb no"; fb.textContent="Trage zuerst eine Antwort ein oder wähle eine aus."; return; }
+  st.checked=true;
+  fb.className="fb "+(allOk?"ok":"no");
+  if(allOk) fb.textContent="✓ Richtig! Vergleiche trotzdem deinen Weg mit dem Lösungsvorschlag.";
+  else if(st.ok.some(Boolean)) fb.textContent="Teilweise richtig. Prüfe die rot markierte Antwort noch einmal.";
+  else fb.textContent="✗ Noch nicht richtig. Schau dir den Tipp an und versuche es noch einmal.";
+  const sb=document.querySelector(`#t${i} [data-act=sol]`); sb.disabled=false; sb.removeAttribute("title");
+  document.getElementById("t"+i).classList.toggle("done",allOk);
+  updateScore();
+}
+
+function points(i){
+  const t=T[i], ok=state[i].ok;
+  if(t.points) return ok.every(Boolean)?t.points:0;
+  return ok.filter(Boolean).length;
+}
+function updateScore(){
+  const s=T.reduce((a,_,i)=>a+points(i),0);
+  document.getElementById("score").textContent=`${s} von ${TOTAL} Punkten`;
+  document.getElementById("meter").style.width=(s/TOTAL*100)+"%";
+  return s;
+}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.closest(".mc")){
+    const i=+b.dataset.i, j=+b.dataset.j, k=+b.dataset.k;
+    state[i].mc[j]=k;
+    b.parentElement.querySelectorAll("button").forEach(x=>{x.setAttribute("aria-pressed",x===b?"true":"false"); x.classList.remove("ok","no");});
+    return;
+  }
+  const i=+b.dataset.i;
+  if(b.dataset.act==="check") check(i);
+  if(b.dataset.act==="tip"){ const t=document.getElementById("tip"+i); t.hidden=!t.hidden; }
+  if(b.dataset.act==="sol"){ const s=document.getElementById("sol"+i); s.hidden=!s.hidden; b.textContent=s.hidden?"Lösungsvorschlag":"Lösung ausblenden"; }
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter" && e.target.matches("input[type=text]")){ check(+e.target.id.slice(2).split("_")[0]); }
+});
+
+document.getElementById("evalBtn").addEventListener("click",()=>{
+  const s=updateScore();
+  const open=[], wrong=[];
+  T.forEach((t,i)=>{ if(!state[i].checked) open.push(i+1); else if(points(i)<(t.points||t.parts.length)) wrong.push(i+1); });
+  const pct=Math.round(s/TOTAL*100);
+  let msg=`Du hast <b>${s} von ${TOTAL} Punkten</b> erreicht (${pct} %). `;
+  msg += pct>=90?LOB[0]:pct>=70?LOB[1]:pct>=50?LOB[2]:LOB[3];
+  if(wrong.length) msg+=`<br>Noch einmal ansehen: Aufgabe ${wrong.join(", ")}.`;
+  if(open.length) msg+=`<br>Noch nicht bearbeitet: Aufgabe ${open.join(", ")}.`;
+  document.getElementById("endText").innerHTML=msg;
+});
+
+document.getElementById("reset").addEventListener("click",()=>{
+  if(!confirm("Alle Eingaben löschen und neu beginnen?")) return;
+  state.forEach(s=>{s.checked=false; s.ok=s.ok.map(()=>false); s.mc=s.mc.map(()=>null);});
+  render(); updateScore();
+  document.getElementById("endText").textContent="Bearbeite die Aufgaben und klicke dann hier auf „Auswerten“.";
+  window.scrollTo(0,0);
+});
+
+render(); updateScore();
+</script>
+</body>
+</html>
